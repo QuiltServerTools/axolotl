@@ -2,7 +2,7 @@
 detekt = "1.17.1"  # Note: Plugin versions must be updated in the settings.gradle.kts too
 kotlin = "1.5.10"  # Note: Plugin versions must be updated in the settings.gradle.kts too
 
-groovy = "3.0.4"
+groovy = "3.0.8"
 kord-extensions = "1.4.4-SNAPSHOT"
 logging = "2.0.6"
 logback = "1.2.3"
