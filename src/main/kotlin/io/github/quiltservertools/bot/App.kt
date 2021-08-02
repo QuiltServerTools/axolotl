@@ -3,6 +3,7 @@ package io.github.quiltservertools.bot
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
 import com.kotlindiscord.kord.extensions.utils.loadModule
+import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
 import io.github.quiltservertools.bot.tags.TagParser
 import me.shedaniel.linkie.namespaces.YarnNamespace
@@ -20,6 +21,8 @@ suspend fun main() {
 
         extensions {
             add(::TagsExtension)
+            add(::SupportExtension)
+
             extMappings {
                 namespaceCheck { namespace -> {
                     failIfNot("Non-yarn commands can only be used in DM") {

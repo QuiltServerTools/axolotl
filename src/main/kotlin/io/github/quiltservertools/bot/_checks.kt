@@ -13,12 +13,12 @@ fun SlashCommand<*>.onlyModerator() {
         if (member == null) {
             fail("Not in a server!")
         } else {
-            if (member.asMember().roleIds.none { it.asString == MODERATOR_ROLE }) {
+            if (member.asMember().roleIds.none { it == MODERATOR_ROLE }) {
                 fail("You don't have the right permissions")
             }
         }
     }
 
     // Discord says not to trust their role checks, so we have a manual check above too.
-    allowRole(Snowflake(MODERATOR_ROLE))
+    allowRole(MODERATOR_ROLE)
 }

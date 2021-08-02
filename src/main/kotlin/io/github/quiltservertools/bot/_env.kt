@@ -10,10 +10,15 @@ val SERVER_ID = Snowflake(
 val TOKEN = env("BOT_TOKEN")
     ?: error("Env var BOT_TOKEN not provided")
 
-val MODERATOR_ROLE = env("MODERATOR_ROLE")
-    ?: error("Env var MODERATOR_ROLE not provided")
+val MODERATOR_ROLE = Snowflake(
+    env("MODERATOR_ROLE")?.toLong()
+        ?: error("Env var MODERATOR_ROLE not provided"))
 
 val TAG_PREFIX = env("TAG_PREFIX")
     ?: error("Env var TAG_PREFIX not provided")
 
 val TAGS_DIR = env("TAGS_DIR") ?: "tags"
+
+val SUPPORT_CHANNEL = Snowflake(
+    env("SUPPORT_CHANNEL")?.toLong()
+        ?: error("Env var SUPPORT_CHANNEL not provided"))
