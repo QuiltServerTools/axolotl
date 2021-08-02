@@ -41,7 +41,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build docker image
-        run: docker build -t ghcr.io/quiltservertools/discord-bot:latest -t ghcr.io/quiltservertools/discord-bot:${GITHUB_SHA}
+        run: docker build -t ghcr.io/quiltservertools/discord-bot:latest -t ghcr.io/quiltservertools/discord-bot:${GITHUB_SHA} .
       - name: Push docker image (latest)
         run: docker push ghcr.io/quiltservertools/discord-bot:latest
       - name: Push docker image
