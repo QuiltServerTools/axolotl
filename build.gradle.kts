@@ -4,40 +4,59 @@ plugins {
     application
 
     kotlin("jvm")
+    kotlin("plugin.serialization")
 
     id("com.github.jakemarsden.git-hooks")
     id("com.github.johnrengelman.shadow")
     id("io.gitlab.arturbosch.detekt")
 }
 
-group = "template"
+group = "io.github.quiltservertools"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    // You can remove this if you're not testing locally-installed KordEx builds
-    mavenLocal()
-
     maven {
         name = "Kotlin Discord"
         url = uri("https://maven.kotlindiscord.com/repository/maven-public/")
+    }
+
+    maven {
+        name = "FabricMC"
+        url = uri("https://maven.fabricmc.net/")
+    }
+
+    maven {
+        name = "Bintray (Linkie)"
+        url = uri("https://dl.bintray.com/shedaniel/linkie")
+    }
+
+    maven {
+        name = "Jitpack"
+        url = uri("https://jitpack.io/")
     }
 }
 
 dependencies {
     detektPlugins(libs.detekt)
 
+    implementation(kotlin("stdlib-jdk8"))
+
     implementation(libs.kord.extensions)
-    implementation(libs.kotlin.stdlib)
+    implementation(libs.kord.extra.mappings)
 
     // Logging dependencies
     implementation(libs.groovy)
     implementation(libs.logback)
     implementation(libs.logging)
+
+    // Tags
+    implementation(libs.kotlinx.serialization)
+    implementation(libs.kaml)
 }
 
 application {
     // This is deprecated, but the Shadow plugin requires it
-    mainClassName = "template.AppKt"
+    mainClassName = "io.github.quiltservertools.bot.AppKt"
 }
 
 gitHooks {
@@ -47,8 +66,7 @@ gitHooks {
 }
 
 tasks.withType<KotlinCompile> {
-    // Current LTS version of Java
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "14"
 
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
 }
@@ -62,9 +80,8 @@ tasks.jar {
 }
 
 java {
-    // Current LTS version of Java
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
 }
 
 detekt {

@@ -3,14 +3,19 @@ detekt = "1.17.1"  # Note: Plugin versions must be updated in the settings.gradl
 kotlin = "1.5.10"  # Note: Plugin versions must be updated in the settings.gradle.kts too
 
 groovy = "3.0.4"
-kord-extensions = "1.4.1"
+kord-extensions = "1.4.4-SNAPSHOT"
 logging = "2.0.6"
 logback = "1.2.3"
+
+kotlinx-serialization = "1.2.2"
+kaml = "0.35.0"
 
 [libraries]
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 groovy = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
 kord-extensions = { module = "com.kotlindiscord.kord.extensions:kord-extensions", version.ref = "kord-extensions" }
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
+kord-extra-mappings = { module = "com.kotlindiscord.kord.extensions:extra-mappings", version.ref = "kord-extensions" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 logging = { module = "io.github.microutils:kotlin-logging", version.ref = "logging" }
+kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
