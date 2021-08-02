@@ -22,7 +22,7 @@ class TagParser {
     private val tags: MutableMap<String, Tag> = HashMap()
 
     fun loadTags(dir: Path) {
-        logger.debug { "Loading io.github.quiltservertools.bot.tags from $dir..." }
+        logger.debug { "Loading tags from $dir..." }
         for (path in Files.walk(dir)) {
             if (path.isRegularFile() && path.fileName.toString().endsWith(".ytag")) {
                 val tagName = path.fileName.toString().substringBefore(".ytag")
@@ -46,7 +46,7 @@ class TagParser {
 
         resolveAliasTags()
 
-        logger.info { "Loaded ${tags.size} io.github.quiltservertools.bot.tags!" }
+        logger.info { "Loaded ${tags.size} tags!" }
     }
 
     fun getTag(name: String): Tag? = tags[name]
@@ -70,7 +70,7 @@ class TagParser {
             }
         }
         if (invalidTags.isNotEmpty()) {
-            logger.warn { "Ignoring ${invalidTags.size} invalid io.github.quiltservertools.bot.tags" }
+            logger.warn { "Ignoring ${invalidTags.size} invalid tags" }
             invalidTags.forEach(this.tags::remove)
         }
     }
@@ -114,5 +114,5 @@ class TagParser {
 // Used to test the tag parser
 fun main() {
     val parser = TagParser()
-    parser.loadTags(Paths.get(".", "io/github/quiltservertools/bot/tags"))
+    parser.loadTags(Paths.get(".", "tags"))
 }

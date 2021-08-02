@@ -42,7 +42,7 @@ suspend fun main() {
 
     // Provide the tag parser using koin injection
     val tagParser = TagParser()
-    tagParser.loadTags(Paths.get("io/github/quiltservertools/bot/tags"))
+    tagParser.loadTags(Paths.get("tags"))
     loadModule { single { tagParser } }
 
     bot.start()

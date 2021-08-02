@@ -15,7 +15,7 @@ import org.koin.core.component.inject
 val TAG_PREFIX = env("TAG_PREFIX") ?: error("Missing environment variable TAG_PREFIX")
 
 class TagsExtension : Extension() {
-    override val name = "io/github/quiltservertools/bot/tags"
+    override val name = "tags"
 
     // Obtain the TagParser that was loaded in App.kt
     private val tagParser: TagParser by inject()
