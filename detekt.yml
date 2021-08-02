@@ -1,8 +1,8 @@
 # TODO: Update `rootPackage` in naming -> InvalidPackageDeclaration
 
 build:
-  maxIssues: 0
-  excludeCorrectable: false
+  maxIssues: 1000
+  excludeCorrectable: true
   weights:
   # complexity: 2
   # LongParameterList: 1
