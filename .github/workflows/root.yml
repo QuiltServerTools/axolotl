@@ -45,4 +45,4 @@ jobs:
       - name: Push docker image (latest)
         run: docker push ghcr.io/quiltservertools/discord-bot:latest
       - name: Push docker image
-        run: ghcr.io/quiltservertools/discord-bot:${GITHUB_SHA}
+        run: docker push ghcr.io/quiltservertools/discord-bot:${GITHUB_SHA}
