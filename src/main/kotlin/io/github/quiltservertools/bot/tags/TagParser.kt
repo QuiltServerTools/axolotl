@@ -49,6 +49,13 @@ class TagParser {
         logger.info { "Loaded ${tags.size} tags!" }
     }
 
+    fun reloadTags(dir: Path): Int {
+        logger.info { "Reloading tags..." }
+        tags.clear()
+        loadTags(dir)
+        return tags.size
+    }
+
     fun getTag(name: String): Tag? = tags[name]
 
     private fun resolveAliasTags() {

@@ -2,15 +2,21 @@
 
 package io.github.quiltservertools.bot.extensions
 
+import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.utils.env
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.reply
 import dev.kord.core.event.message.MessageCreateEvent
+import io.github.quiltservertools.bot.SERVER_ID
+import io.github.quiltservertools.bot.onlyModerator
 import io.github.quiltservertools.bot.tags.TagParser
 import io.github.quiltservertools.bot.tags.applyFromTag
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
+import java.nio.file.Paths
 
 val TAG_PREFIX = env("TAG_PREFIX") ?: error("Missing environment variable TAG_PREFIX")
 
@@ -37,6 +43,23 @@ class TagsExtension : Extension() {
                         applyFromTag(kord, tag, args)
                     }
                 }
+            }
+        }
+
+        slashCommand {
+            name = "reload-tags"
+            description = "Reloads the tags"
+
+            onlyModerator()
+            guild(SERVER_ID)
+
+            autoAck = AutoAckType.EPHEMERAL
+
+            action {
+                val tagCount = withContext(Dispatchers.IO) {
+                    tagParser.reloadTags(Paths.get("tags"))
+                }
+                ephemeralFollowUp { content = "Loaded `$tagCount` tags!" }
             }
         }
     }
