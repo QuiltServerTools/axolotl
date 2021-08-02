@@ -10,7 +10,7 @@ build:
   # comments: 1
 
 config:
-  validation: true
+  validation: false
   # when writing own rules with new properties, exclude the property path e.g.: 'my_rule_set,.*>.*>[my_property]'
   excludes: ''
 
@@ -25,21 +25,21 @@ processors:
     - 'KtFileCountProcessor'
 
 console-reports:
-  active: true
+  active: false
   exclude:
     - 'ProjectStatisticsReport'
     - 'NotificationReport'
     - 'FileBasedFindingsReport'
 
 output-reports:
-  active: true
+  active: false
   exclude:
     # - 'HtmlOutputReport'
     - 'TxtOutputReport'
     # - 'XmlOutputReport'
 
 comments:
-  active: true
+  active: false
   excludes: ['**/test/**', '**/androidTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
   AbsentOrWrongFileLicense:
     active: false
@@ -49,7 +49,7 @@ comments:
   CommentOverPrivateProperty:
     active: false
   EndOfSentenceFormat:
-    active: true
+    active: false
     endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
   UndocumentedPublicClass:
     active: false
