@@ -35,9 +35,7 @@ class TagsExtension : Extension() {
                 val args = pts.drop(1)
                 val tag = tagParser.getTag(tagName)
 
-                if (tag == null) {
-                    event.message.reply { content = "Unknown tag called $tagName" }
-                } else {
+                if (tag != null) {
                     event.message.channel.createMessage {
                         applyFromTag(kord, tag, args)
                     }
