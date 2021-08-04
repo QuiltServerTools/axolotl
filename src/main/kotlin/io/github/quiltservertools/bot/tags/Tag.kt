@@ -13,7 +13,9 @@ import dev.kord.common.kColor
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.EmbedData
 import dev.kord.core.entity.Embed
-import dev.kord.rest.builder.message.MessageCreateBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
+import dev.kord.rest.builder.message.create.allowedMentions
+import dev.kord.rest.builder.message.create.embed
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
