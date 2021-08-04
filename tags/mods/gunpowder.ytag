@@ -1,6 +1,7 @@
 ---
 type: embed
 colour: red
+embed: {}
 ---
 
 Gunpowder is incompatible with Ledger because both mods use Exposed and Gunpowder does not shade Exposed
