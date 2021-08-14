@@ -1,0 +1,7 @@
+---
+type: embed
+colour: blue
+embed: {}
+---
+
+Ledger was created to target Minecraft 1.17. For 1.16 it is recommended to use [Deltalogger](https://github.com/QuiltServerTools/Deltalogger), which is a predecessor of Ledger.
