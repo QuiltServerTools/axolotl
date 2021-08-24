@@ -4,4 +4,5 @@ colour: red
 embed: {}
 ---
 
-Gunpowder is incompatible with Ledger because both mods use Exposed and Gunpowder does not shade Exposed
+Gunpowder is incompatible with Ledger because both mods use Exposed and Gunpowder does not shade Exposed.
+You can find some alternatives for its seperate parts on the [fabric-serverside-mods](https://github.com/comp500/fabric-serverside-mods) list.
