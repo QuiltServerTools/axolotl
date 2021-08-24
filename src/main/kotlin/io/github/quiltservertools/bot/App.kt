@@ -5,7 +5,7 @@ import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
 import com.kotlindiscord.kord.extensions.utils.loadModule
 import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
-import io.github.quiltservertools.bot.tags.TagParser
+import io.github.quiltservertools.bot.tags.TagRepo
 import me.shedaniel.linkie.namespaces.YarnNamespace
 import java.nio.file.Paths
 
@@ -34,9 +34,9 @@ suspend fun main() {
     }
 
     // Provide the tag parser using koin injection
-    val tagParser = TagParser()
-    tagParser.loadTags(Paths.get(TAGS_DIR))
-    loadModule { single { tagParser } }
+    val tagRepo = TagRepo(Paths.get("tags-repo"))
+    tagRepo.init()
+    loadModule { single { tagRepo } }
 
     bot.start()
 }

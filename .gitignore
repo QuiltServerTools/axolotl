@@ -112,3 +112,6 @@ build/
 .env
 
 .linkie-cache/
+
+# Ignore tags repo
+tags-repo/

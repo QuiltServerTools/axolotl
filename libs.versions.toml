@@ -10,6 +10,8 @@ logback = "1.2.3"
 kotlinx-serialization = "1.2.2"
 kaml = "0.35.0"
 
+jgit = "5.12.0.202106070339-r"
+
 [libraries]
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 groovy = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
@@ -19,3 +21,4 @@ logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 logging = { module = "io.github.microutils:kotlin-logging", version.ref = "logging" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
+jgit = { module = "org.eclipse.jgit:org.eclipse.jgit", version.ref = "jgit" }
