@@ -17,7 +17,7 @@ val MODERATOR_ROLE = Snowflake(
 val TAG_PREFIX = env("TAG_PREFIX")
     ?: error("Env var TAG_PREFIX not provided")
 
-val TAGS_DIR = env("TAGS_DIR") ?: "tags"
+val REPO_URL = env("REPO_DIR") ?: "https://github.com/QuiltServerTools/axolotl"
 
 val SUPPORT_CHANNEL = Snowflake(
     env("SUPPORT_CHANNEL")?.toLong()

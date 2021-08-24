@@ -6,26 +6,28 @@ import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.createMessage
-import dev.kord.core.behavior.reply
+import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.message.MessageCreateEvent
 import io.github.quiltservertools.bot.SERVER_ID
-import io.github.quiltservertools.bot.TAGS_DIR
 import io.github.quiltservertools.bot.TAG_PREFIX
 import io.github.quiltservertools.bot.onlyModerator
-import io.github.quiltservertools.bot.tags.TagParser
+import io.github.quiltservertools.bot.tags.TagRepo
 import io.github.quiltservertools.bot.tags.applyFromTag
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
-import java.nio.file.Paths
 
 class TagsExtension : Extension() {
     override val name = "tags"
 
-    // Obtain the TagParser that was loaded in App.kt
-    private val tagParser: TagParser by inject()
+    // Obtain the TagRepo that was loaded in App.kt
+    private val tagRepo: TagRepo by inject()
 
     override suspend fun setup() {
+        event<ReadyEvent> {
+            action {
+                tagRepo.reload()
+            }
+        }
+
         event<MessageCreateEvent> {
             check { failIf(!event.message.content.startsWith(TAG_PREFIX)) }
 
@@ -33,7 +35,7 @@ class TagsExtension : Extension() {
                 val pts = event.message.content.removePrefix(TAG_PREFIX).split("\\s".toRegex())
                 val tagName = pts.first()
                 val args = pts.drop(1)
-                val tag = tagParser.getTag(tagName)
+                val tag = tagRepo[tagName]
 
                 if (tag != null) {
                     event.message.channel.createMessage {
@@ -53,9 +55,7 @@ class TagsExtension : Extension() {
             autoAck = AutoAckType.EPHEMERAL
 
             action {
-                val tagCount = withContext(Dispatchers.IO) {
-                    tagParser.reloadTags(Paths.get(TAGS_DIR))
-                }
+                val tagCount = tagRepo.reload()
                 ephemeralFollowUp { content = "Loaded `$tagCount` tags!" }
             }
         }

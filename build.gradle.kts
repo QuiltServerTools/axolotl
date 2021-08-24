@@ -52,6 +52,7 @@ dependencies {
     // Tags
     implementation(libs.kotlinx.serialization)
     implementation(libs.kaml)
+    implementation(libs.jgit)
 }
 
 application {
