@@ -2,6 +2,7 @@ package io.github.quiltservertools.bot
 
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.core.entity.Guild
+import dev.kord.core.entity.Member
 
 // Borrowed from https://github.com/QuiltMC/cozy-discord/blob/root/src/main/kotlin/org/quiltmc/community/_Utils.kt#L117
 fun Guild.getMaxArchiveDuration(): ArchiveDuration {
@@ -17,3 +18,5 @@ fun Guild.getMaxArchiveDuration(): ArchiveDuration {
         else -> ArchiveDuration.Day
     }
 }
+
+fun Member.isModerator(): Boolean = this.roleIds.contains(MODERATOR_ROLE)

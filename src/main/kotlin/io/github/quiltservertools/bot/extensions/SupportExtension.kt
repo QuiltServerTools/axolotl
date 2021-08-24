@@ -1,16 +1,30 @@
 package io.github.quiltservertools.bot.extensions
 
+import com.kotlindiscord.kord.extensions.CommandException
+import com.kotlindiscord.kord.extensions.checks.isInThread
+import com.kotlindiscord.kord.extensions.checks.memberFor
+import com.kotlindiscord.kord.extensions.commands.converters.impl.defaultingBoolean
+import com.kotlindiscord.kord.extensions.commands.converters.impl.string
+import com.kotlindiscord.kord.extensions.commands.parser.Arguments
+import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import dev.kord.common.annotation.KordPreview
+import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.message.MessageCreateEvent
 import io.github.quiltservertools.bot.MODERATOR_ROLE
+import io.github.quiltservertools.bot.SERVER_ID
 import io.github.quiltservertools.bot.SUPPORT_CHANNEL
 import io.github.quiltservertools.bot.getMaxArchiveDuration
+import io.github.quiltservertools.bot.isModerator
+import io.github.quiltservertools.bot.onlyModerator
 
 /**
  * Currently only opens new threads when messages are posted in the support channel,
  * more features may be added later.
  */
+@OptIn(KordPreview::class)
 class SupportExtension : Extension() {
     override val name = "support"
 
@@ -25,11 +39,105 @@ class SupportExtension : Extension() {
                 val thread =
                     (event.message.channel.asChannel() as TextChannel).startPublicThreadWithMessage(
                         messageId = event.message.id,
-                        name = event.message.author?.tag?.replace("#", "-") ?: "Support",
+                        name = event.message.author?.tag?.channelify() ?: "Support",
                         archiveDuration = event.message.getGuild().getMaxArchiveDuration(),
                     )
                 thread.leave()
             }
+        }
+
+        slashCommand(::RenameArgs) {
+            name = "rename-thread"
+            description = "Rename the current thread, if you have permission to do so."
+
+            guild(SERVER_ID)
+            autoAck = AutoAckType.PUBLIC
+
+            check {
+                // TODO: Replace this with threadFor when it works with InteractionCreateEvents
+                val thread = event.interaction.channel.asChannelOrNull() as? ThreadChannel
+                if (thread == null) {
+                    fail(message = "Must be run in a thread!")
+                    return@check
+                }
+                val member = memberFor(event)
+                if (member == null) {
+                    fail(message = "Must be run in a server!")
+                    return@check
+                }
+                failIf("Can only be run in threads in <#$SUPPORT_CHANNEL>") {
+                    thread.parentId != SUPPORT_CHANNEL
+                }
+                failIf("This thread is not yours or has already been renamed!") {
+                    thread.asChannel().name != member.asUser().tag.channelify()
+                }
+                // Force pass if user is moderator
+                if (member.asMember().isModerator()) pass()
+            }
+
+            action {
+                val thread = channel as ThreadChannel
+                val newName = arguments.name.channelify()
+                thread.edit {
+                    name = newName
+                }
+                // Additional name sanitization needed here to prevent breaking out of the monospaced block.
+                publicFollowUp { content = "Renamed this thread to `${newName.replace("`", "")}`" }
+            }
+        }
+
+        slashCommand(::ArchiveArgs) {
+            name = "archive"
+            description = "Archives the current thread"
+            guild(SERVER_ID)
+
+            onlyModerator()
+            check(isInThread)
+
+            action {
+                val thread = channel as ThreadChannel
+                thread.edit {
+                    archived = true
+                    locked = arguments.lock
+                }
+                ephemeralFollowUp {  content = if (arguments.lock) {
+                    "Archived and locked the thread"
+                } else {
+                    "Archived the thread"
+                } }
+            }
+        }
+    }
+
+    class RenameArgs : Arguments() {
+        val name by string(
+            displayName = "name",
+            description = "The new name for this thread",
+            validator = { _, value ->
+                if (value.length > 100) {
+                    throw CommandException("Name cannot be longer than 100 characters")
+                }
+            }
+        )
+    }
+
+    class ArchiveArgs : Arguments() {
+        val lock by defaultingBoolean(
+            displayName = "lock",
+            description = "Whether the thread should also be locked (defaults to false)",
+            defaultValue = false,
+        )
+    }
+
+    /**
+     * Converts a [String] to a Discord channel name friendly [String]
+     */
+    private fun String.channelify(): String {
+        val tmp = this.replace("#", "-")
+        return if (tmp.length > 100) {
+            tmp.substring(0, 100 - 3) + "..."
+        } else {
+            tmp
         }
     }
 }
