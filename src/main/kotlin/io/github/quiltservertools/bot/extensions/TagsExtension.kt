@@ -38,8 +38,14 @@ class TagsExtension : Extension() {
                 val tag = tagRepo[tagName]
 
                 if (tag != null) {
-                    event.message.channel.createMessage {
-                        applyFromTag(kord, tag, args)
+                    try {
+                        event.message.channel.createMessage {
+                            applyFromTag(kord, tag, args)
+                        }
+                    } catch (e: Exception) {
+                        event.message.channel.createMessage {
+                            content = "Failed to send that tag: `${e::class.java.simpleName}: ${e.message}`"
+                        }
                     }
                 }
             }
