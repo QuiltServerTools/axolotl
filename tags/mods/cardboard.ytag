@@ -1,0 +1,10 @@
+---
+type: embed
+colour: red
+embed: {}
+---
+
+None of our mods are designed to be compatible with or support cardboard.
+We highly discourage the use of cardboard due to its poor code design and breaking changes to the base game that make mod compatibility difficult.
+
+If you need an alternative for a certain bukkit/spigot plugin please have a look on the [fabric-serverside-mods](https://github.com/comp500/fabric-serverside-mods) list or ask someone here.
