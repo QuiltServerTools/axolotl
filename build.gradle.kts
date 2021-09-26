@@ -26,14 +26,21 @@ repositories {
     }
 
     maven {
-        name = "Bintray (Linkie)"
-        url = uri("https://dl.bintray.com/shedaniel/linkie")
+        name = "QuiltMC (Releases)"
+        url = uri("https://maven.quiltmc.org/repository/release/")
+    }
+
+    maven {
+        name = "QuiltMC (Snapshots)"
+        url = uri("https://maven.quiltmc.org/repository/snapshot/")
     }
 
     maven {
         name = "Jitpack"
         url = uri("https://jitpack.io/")
     }
+
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -41,7 +48,10 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation(libs.kord.extensions)
+    implementation(libs.kord.extensions) {
+        exclude(group = "dev.kord")
+    }
+    implementation(libs.kord.core)
     implementation(libs.kord.extra.mappings)
 
     // Logging dependencies

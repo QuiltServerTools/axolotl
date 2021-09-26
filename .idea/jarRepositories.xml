@@ -46,5 +46,20 @@
       <option name="name" value="Jitpack" />
       <option name="url" value="https://jitpack.io/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://oss.sonatype.org/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="QuiltMC (Releases)" />
+      <option name="name" value="QuiltMC (Releases)" />
+      <option name="url" value="https://maven.quiltmc.org/repository/release/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="QuiltMC (Snapshots)" />
+      <option name="name" value="QuiltMC (Snapshots)" />
+      <option name="url" value="https://maven.quiltmc.org/repository/snapshot/" />
+    </remote-repository>
   </component>
 </project>

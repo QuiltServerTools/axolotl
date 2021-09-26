@@ -2,8 +2,10 @@
 
 package io.github.quiltservertools.bot.extensions
 
-import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.extensions.ephemeralSlashCommand
+import com.kotlindiscord.kord.extensions.extensions.event
+import com.kotlindiscord.kord.extensions.interactions.respond
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.event.gateway.ReadyEvent
@@ -51,18 +53,16 @@ class TagsExtension : Extension() {
             }
         }
 
-        slashCommand {
+        ephemeralSlashCommand {
             name = "reload-tags"
             description = "Reloads the tags"
 
             onlyModerator()
             guild(SERVER_ID)
 
-            autoAck = AutoAckType.EPHEMERAL
-
             action {
                 val tagCount = tagRepo.reload()
-                ephemeralFollowUp { content = "Loaded `$tagCount` tags!" }
+                respond { content = "Loaded `$tagCount` tags!" }
             }
         }
     }

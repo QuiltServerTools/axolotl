@@ -1,24 +1,22 @@
 package io.github.quiltservertools.bot.extensions
 
-import com.kotlindiscord.kord.extensions.CommandException
+import com.kotlindiscord.kord.extensions.DiscordRelayedException
 import com.kotlindiscord.kord.extensions.checks.isInThread
 import com.kotlindiscord.kord.extensions.checks.memberFor
+import com.kotlindiscord.kord.extensions.commands.Arguments
 import com.kotlindiscord.kord.extensions.commands.converters.impl.defaultingBoolean
 import com.kotlindiscord.kord.extensions.commands.converters.impl.string
-import com.kotlindiscord.kord.extensions.commands.parser.Arguments
-import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.extensions.ephemeralSlashCommand
+import com.kotlindiscord.kord.extensions.extensions.event
+import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
+import com.kotlindiscord.kord.extensions.interactions.respond
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.message.MessageCreateEvent
-import io.github.quiltservertools.bot.MODERATOR_ROLE
-import io.github.quiltservertools.bot.SERVER_ID
-import io.github.quiltservertools.bot.SUPPORT_CHANNEL
-import io.github.quiltservertools.bot.getMaxArchiveDuration
-import io.github.quiltservertools.bot.isModerator
-import io.github.quiltservertools.bot.onlyModerator
+import io.github.quiltservertools.bot.*
 
 /**
  * Currently only opens new threads when messages are posted in the support channel,
@@ -46,12 +44,11 @@ class SupportExtension : Extension() {
             }
         }
 
-        slashCommand(::RenameArgs) {
+        publicSlashCommand(::RenameArgs) {
             name = "rename-thread"
             description = "Rename the current thread, if you have permission to do so."
 
             guild(SERVER_ID)
-            autoAck = AutoAckType.PUBLIC
 
             check {
                 // TODO: Replace this with threadFor when it works with InteractionCreateEvents
@@ -82,17 +79,17 @@ class SupportExtension : Extension() {
                     name = newName
                 }
                 // Additional name sanitization needed here to prevent breaking out of the monospaced block.
-                publicFollowUp { content = "Renamed this thread to `${newName.replace("`", "")}`" }
+                respond { content = "Renamed this thread to `${newName.replace("`", "")}`" }
             }
         }
 
-        slashCommand(::ArchiveArgs) {
+        ephemeralSlashCommand(::ArchiveArgs) {
             name = "archive"
             description = "Archives the current thread"
             guild(SERVER_ID)
 
             onlyModerator()
-            check(isInThread)
+            check { isInThread() }
 
             action {
                 val thread = channel as ThreadChannel
@@ -100,11 +97,13 @@ class SupportExtension : Extension() {
                     archived = true
                     locked = arguments.lock
                 }
-                ephemeralFollowUp {  content = if (arguments.lock) {
-                    "Archived and locked the thread"
-                } else {
-                    "Archived the thread"
-                } }
+                respond {
+                    content = if (arguments.lock) {
+                        "Archived and locked the thread"
+                    } else {
+                        "Archived the thread"
+                    }
+                }
             }
         }
     }
@@ -115,7 +114,7 @@ class SupportExtension : Extension() {
             description = "The new name for this thread",
             validator = { _, value ->
                 if (value.length > 100) {
-                    throw CommandException("Name cannot be longer than 100 characters")
+                    throw DiscordRelayedException("Name cannot be longer than 100 characters")
                 }
             }
         )
