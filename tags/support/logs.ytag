@@ -1,0 +1,11 @@
+---
+type: embed
+colour: blurple
+embed:
+  title: How to post your logs to get help
+---
+
+  When requesting support for a crash or other error, you should provide error logs - this will give us the information we'll need to help you.
+
+  **»** [Windows/Linux](https://fabricmc.net/wiki/player:tutorials:logs_ml:windows)
+  **»** [MacOS](https://fabricmc.net/wiki/player:tutorials:logs_ml:mac)

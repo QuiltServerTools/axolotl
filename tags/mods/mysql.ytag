@@ -1,0 +1,16 @@
+---
+type: embed
+colour: green
+embed: {}
+---
+
+MySQL support can be enabled in ledger with the [ledger-databases](https://curseforge.com/minecraft/mc-mods/ledger-databases) extension.
+Once installed, you can enable it by adding
+```toml
+[database_extensions]
+database = "MYSQL"
+url = ""
+username = ""
+password = ""
+```
+to your ledger.toml

@@ -1,0 +1,13 @@
+---
+type: embed
+colour: green
+embed: {}
+---
+
+H2 support can be enabled in ledger with the [ledger-databases](https://curseforge.com/minecraft/mc-mods/ledger-databases) extension.
+Once installed, you can enable it by adding
+```toml
+[database_extensions]
+database = "H2"
+```
+to your ledger.toml
