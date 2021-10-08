@@ -46,5 +46,7 @@ class TagRepo(
             .call()
     }
 
+    public fun getTags(): Collection<String> = tagParser.getTagNames()
+
     operator fun get(name: String): Tag? = this.tagParser.getTag(name)
 }

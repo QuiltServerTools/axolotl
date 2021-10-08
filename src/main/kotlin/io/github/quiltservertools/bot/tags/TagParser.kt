@@ -58,6 +58,8 @@ class TagParser {
 
     fun getTag(name: String): Tag? = tags[name]
 
+    fun getTagNames() = tags.keys
+
     private fun resolveAliasTags() {
         val invalidTags = ArrayList<String>()
         for ((name, tag) in tags) {

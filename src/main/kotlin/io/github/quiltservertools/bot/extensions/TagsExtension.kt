@@ -4,6 +4,7 @@ package io.github.quiltservertools.bot.extensions
 
 import com.kotlindiscord.kord.extensions.commands.slash.AutoAckType
 import com.kotlindiscord.kord.extensions.extensions.Extension
+import com.kotlindiscord.kord.extensions.pagination.pages.Page
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.event.gateway.ReadyEvent
@@ -63,6 +64,24 @@ class TagsExtension : Extension() {
             action {
                 val tagCount = tagRepo.reload()
                 ephemeralFollowUp { content = "Loaded `$tagCount` tags!" }
+            }
+        }
+
+        slashCommand {
+            name = "list-tags"
+            description = "Lists currently loaded tags"
+
+            guild(SERVER_ID)
+
+            action {
+                paginator {
+
+                    tagRepo
+                    page(Page(
+                        description = chunk.joinToString("\n") { "**»** `${it.version}`" }
+
+                    ))
+                }
             }
         }
     }
