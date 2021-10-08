@@ -3,12 +3,11 @@ package io.github.quiltservertools.bot
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
 import com.kotlindiscord.kord.extensions.utils.loadModule
+import io.github.quiltservertools.bot.extensions.RoleMenuExtension
 import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
-import io.github.quiltservertools.bot.extensions.RoleMenuExtension
 import io.github.quiltservertools.bot.tags.TagRepo
 import me.shedaniel.linkie.namespaces.YarnNamespace
-import org.koin.dsl.bind
 import java.nio.file.Paths
 
 suspend fun main() {
@@ -28,11 +27,13 @@ suspend fun main() {
             add(::RoleMenuExtension)
 
             extMappings {
-                namespaceCheck { namespace -> {
-                    failIfNot("Non-yarn commands can only be used in DM") {
-                        namespace == YarnNamespace || event.guildId == null
+                namespaceCheck { namespace ->
+                    {
+                        failIfNot("Non-yarn commands can only be used in DM") {
+                            namespace == YarnNamespace || event.guildId == null
+                        }
                     }
-                } }
+                }
             }
         }
     }
