@@ -21,8 +21,8 @@ import io.github.quiltservertools.bot.isModerator
 import io.github.quiltservertools.bot.onlyModerator
 
 /**
- * Currently only opens new threads when messages are posted in the support channel,
- * more features may be added later.
+ * Automatically opens new threads when messages are posted in the support channel.
+ * Also adds /rename-thread and /archive helper commands
  */
 @OptIn(KordPreview::class)
 class SupportExtension : Extension() {
@@ -76,7 +76,7 @@ class SupportExtension : Extension() {
             }
 
             action {
-                val thread = channel as ThreadChannel
+                val thread = channel.asChannel() as ThreadChannel
                 val newName = arguments.name.channelify()
                 thread.edit {
                     name = newName
@@ -95,7 +95,7 @@ class SupportExtension : Extension() {
             check(isInThread)
 
             action {
-                val thread = channel as ThreadChannel
+                val thread = channel.asChannel() as ThreadChannel
                 thread.edit {
                     archived = true
                     locked = arguments.lock
