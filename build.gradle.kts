@@ -26,14 +26,15 @@ repositories {
     }
 
     maven {
-        name = "Bintray (Linkie)"
-        url = uri("https://dl.bintray.com/shedaniel/linkie")
+        name = "QuiltMC (Snapshots)"
+        url = uri("https://maven.quiltmc.org/repository/snapshot/")
     }
 
     maven {
         name = "Jitpack"
         url = uri("https://jitpack.io/")
     }
+
 }
 
 dependencies {
