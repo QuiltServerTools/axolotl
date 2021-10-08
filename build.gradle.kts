@@ -48,10 +48,7 @@ dependencies {
 
     implementation(kotlin("stdlib-jdk8"))
 
-    implementation(libs.kord.extensions) {
-        exclude(group = "dev.kord")
-    }
-    implementation(libs.kord.core)
+    implementation(libs.kord.extensions)
     implementation(libs.kord.extra.mappings)
 
     // Logging dependencies

@@ -5,10 +5,7 @@ import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
 import com.kotlindiscord.kord.extensions.utils.loadModule
 import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
-import io.github.quiltservertools.bot.extensions.roles.JsonRoleMenu
-import io.github.quiltservertools.bot.extensions.roles.RoleMenuData
-import io.github.quiltservertools.bot.extensions.roles.RoleMenuExtension
-import io.github.quiltservertools.bot.tags.TagParser
+import io.github.quiltservertools.bot.extensions.RoleMenuExtension
 import io.github.quiltservertools.bot.tags.TagRepo
 import me.shedaniel.linkie.namespaces.YarnNamespace
 import org.koin.dsl.bind
@@ -44,11 +41,8 @@ suspend fun main() {
     val tagRepo = TagRepo(Paths.get("tags-repo"))
     tagRepo.init()
 
-    val roleMenus = JsonRoleMenu()
-    roleMenus.load()
     loadModule {
         single { tagRepo }
-        single { roleMenus } bind RoleMenuData::class
     }
 
     bot.start()
