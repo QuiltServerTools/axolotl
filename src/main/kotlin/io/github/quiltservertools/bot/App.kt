@@ -43,6 +43,10 @@ suspend fun main() {
         intents {
             +Intent.GuildMembers
         }
+
+        members {
+            all()
+        }
     }
 
     // Provide the tag parser using koin injection
