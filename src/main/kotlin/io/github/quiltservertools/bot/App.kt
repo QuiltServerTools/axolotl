@@ -3,6 +3,8 @@ package io.github.quiltservertools.bot
 import com.kotlindiscord.kord.extensions.ExtensibleBot
 import com.kotlindiscord.kord.extensions.modules.extra.mappings.extMappings
 import com.kotlindiscord.kord.extensions.utils.loadModule
+import dev.kord.gateway.Intent
+import dev.kord.gateway.PrivilegedIntent
 import io.github.quiltservertools.bot.extensions.RoleMenuExtension
 import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
@@ -10,6 +12,7 @@ import io.github.quiltservertools.bot.tags.TagRepo
 import me.shedaniel.linkie.namespaces.YarnNamespace
 import java.nio.file.Paths
 
+@OptIn(PrivilegedIntent::class)
 suspend fun main() {
     val bot = ExtensibleBot(TOKEN) {
         chatCommands {
@@ -35,6 +38,10 @@ suspend fun main() {
                     }
                 }
             }
+        }
+
+        intents {
+            +Intent.GuildMembers
         }
     }
 
