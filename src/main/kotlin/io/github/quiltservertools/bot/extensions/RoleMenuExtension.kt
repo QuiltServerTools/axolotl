@@ -11,11 +11,11 @@ import com.kotlindiscord.kord.extensions.extensions.chatCommand
 import com.kotlindiscord.kord.extensions.extensions.event
 import com.kotlindiscord.kord.extensions.utils.ackEphemeral
 import com.kotlindiscord.kord.extensions.utils.emoji
-import com.kotlindiscord.kord.extensions.utils.ephemeralFollowup
 import com.kotlindiscord.kord.extensions.utils.hasRole
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.createMessage
+import dev.kord.core.behavior.interaction.followUpEphemeral
 import dev.kord.core.entity.interaction.SelectMenuInteraction
 import dev.kord.core.event.interaction.InteractionCreateEvent
 import dev.kord.rest.builder.message.create.embed
@@ -100,7 +100,7 @@ class RoleMenuExtension : Extension() {
                 }
 
                 val response = interaction.ackEphemeral()
-                response.ephemeralFollowup {
+                response.followUpEphemeral {
                     content = responseContent.ifEmpty { "No changes" }
                 }
             }

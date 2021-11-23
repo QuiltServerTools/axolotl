@@ -33,7 +33,7 @@ suspend fun main() {
                 namespaceCheck { namespace ->
                     {
                         failIfNot("Non-yarn commands can only be used in DM") {
-                            namespace == YarnNamespace || event.guildId == null
+                            namespace == YarnNamespace
                         }
                     }
                 }
