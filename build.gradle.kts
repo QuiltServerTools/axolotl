@@ -26,6 +26,11 @@ repositories {
     }
 
     maven {
+        name = "QuiltMC (Releases)"
+        url = uri("https://maven.quiltmc.org/repository/release/")
+    }
+
+    maven {
         name = "QuiltMC (Snapshots)"
         url = uri("https://maven.quiltmc.org/repository/snapshot/")
     }
@@ -43,10 +48,11 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
     implementation(libs.kord.extensions)
-    implementation(libs.kord.extra.mappings)
+    implementation(libs.kord.mappings)
 
     // Logging dependencies
     implementation(libs.groovy)
+    implementation(libs.jansi)
     implementation(libs.logback)
     implementation(libs.logging)
 

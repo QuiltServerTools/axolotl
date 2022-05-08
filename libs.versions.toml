@@ -1,11 +1,12 @@
 [versions]
-detekt = "1.17.1"  # Note: Plugin versions must be updated in the settings.gradle.kts too
-kotlin = "1.5.30"  # Note: Plugin versions must be updated in the settings.gradle.kts too
+detekt = "1.20.0"  # Note: Plugin versions must be updated in the settings.gradle.kts too
+kotlin = "1.6.20"  # Note: Plugin versions must be updated in the settings.gradle.kts too
 
-groovy = "3.0.8"
-kord-extensions = "1.5.1-SNAPSHOT"
-logging = "2.0.6"
-logback = "1.2.3"
+groovy = "3.0.9"
+jansi = "2.4.0"
+kord-extensions = "1.5.3-SNAPSHOT"
+logging = "2.1.21"
+logback = "1.2.5"
 
 kotlinx-serialization = "1.2.2"
 kaml = "0.35.0"
@@ -15,8 +16,9 @@ jgit = "5.12.0.202106070339-r"
 [libraries]
 detekt = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 groovy = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
+jansi = { module = "org.fusesource.jansi:jansi", version.ref = "jansi" }
 kord-extensions = { module = "com.kotlindiscord.kord.extensions:kord-extensions", version.ref = "kord-extensions" }
-kord-extra-mappings = { module = "com.kotlindiscord.kord.extensions:extra-mappings", version.ref = "kord-extensions" }
+kord-mappings = { module = "com.kotlindiscord.kord.extensions:extra-mappings", version.ref = "kord-extensions" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 logging = { module = "io.github.microutils:kotlin-logging", version.ref = "logging" }
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }

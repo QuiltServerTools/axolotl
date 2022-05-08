@@ -1,10 +1,13 @@
 import ch.qos.logback.core.joran.spi.ConsoleTarget
 
 def environment = System.getenv().getOrDefault("SENTRY_ENVIRONMENT", "dev")
+
 def defaultLevel = INFO
+def defaultTarget = ConsoleTarget.SystemErr
 
 if (environment == "dev") {
     defaultLevel = DEBUG
+    defaultTarget = ConsoleTarget.SystemOut
 
     // Silence warning about missing native PRNG on Windows
     logger("io.ktor.util.random", ERROR)
@@ -16,10 +19,12 @@ if (environment == "dev") {
 
 appender("CONSOLE", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
-        pattern = "%magenta([%d{YYYY-MM-dd HH:mm:ss.SSS}]) %cyan([%thread]) %highlight(%-5level) %yellow(%logger{36}) - %msg%n"
+        pattern = "%boldGreen(%d{yyyy-MM-dd}) %boldYellow(%d{HH:mm:ss}) %gray(|) %highlight(%5level) %gray(|) %boldMagenta(%40.40logger{40}) %gray(|) %msg%n"
+
+        withJansi = true
     }
 
-    target = ConsoleTarget.SystemOut
+    target = defaultTarget
 }
 
 root(defaultLevel, ["CONSOLE"])

@@ -11,7 +11,6 @@ import com.kotlindiscord.kord.extensions.extensions.ephemeralSlashCommand
 import com.kotlindiscord.kord.extensions.extensions.event
 import com.kotlindiscord.kord.extensions.extensions.publicSlashCommand
 import com.kotlindiscord.kord.extensions.types.respond
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.threads.edit
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -22,7 +21,6 @@ import io.github.quiltservertools.bot.*
  * Automatically opens new threads when messages are posted in the support channel.
  * Also adds /rename-thread and /archive helper commands
  */
-@OptIn(KordPreview::class)
 class SupportExtension : Extension() {
     override val name = "support"
 
@@ -88,7 +86,6 @@ class SupportExtension : Extension() {
             description = "Archives the current thread"
             guild(SERVER_ID)
 
-            onlyModerator()
             check { isInThread() }
 
             action {
@@ -109,23 +106,24 @@ class SupportExtension : Extension() {
     }
 
     class RenameArgs : Arguments() {
-        val name by string(
-            displayName = "name",
-            description = "The new name for this thread",
-            validator = { _, value ->
+        val name by string {
+            name = "name"
+            description = "The new name for this thread"
+
+            validate {
                 if (value.length > 100) {
                     throw DiscordRelayedException("Name cannot be longer than 100 characters")
                 }
             }
-        )
+        }
     }
 
     class ArchiveArgs : Arguments() {
-        val lock by defaultingBoolean(
-            displayName = "lock",
-            description = "Whether the thread should also be locked (defaults to false)",
-            defaultValue = false,
-        )
+        val lock by defaultingBoolean {
+            name = "lock"
+            description = "Whether the thread should also be locked (defaults to false)"
+            defaultValue = false
+        }
     }
 
     /**

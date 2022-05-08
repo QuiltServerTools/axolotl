@@ -1,18 +1,14 @@
-@file:OptIn(KordPreview::class)
-
 package io.github.quiltservertools.bot.extensions
 
 import com.kotlindiscord.kord.extensions.extensions.Extension
 import com.kotlindiscord.kord.extensions.extensions.ephemeralSlashCommand
 import com.kotlindiscord.kord.extensions.extensions.event
 import com.kotlindiscord.kord.extensions.types.respond
-import dev.kord.common.annotation.KordPreview
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.event.gateway.ReadyEvent
 import dev.kord.core.event.message.MessageCreateEvent
 import io.github.quiltservertools.bot.SERVER_ID
 import io.github.quiltservertools.bot.TAG_PREFIX
-import io.github.quiltservertools.bot.onlyModerator
 import io.github.quiltservertools.bot.tags.TagRepo
 import io.github.quiltservertools.bot.tags.applyFromTag
 import org.koin.core.component.inject
@@ -57,7 +53,6 @@ class TagsExtension : Extension() {
             name = "reload-tags"
             description = "Reloads the tags"
 
-            onlyModerator()
             guild(SERVER_ID)
 
             action {

@@ -9,7 +9,6 @@ import io.github.quiltservertools.bot.extensions.RoleMenuExtension
 import io.github.quiltservertools.bot.extensions.SupportExtension
 import io.github.quiltservertools.bot.extensions.TagsExtension
 import io.github.quiltservertools.bot.tags.TagRepo
-import me.shedaniel.linkie.namespaces.YarnNamespace
 import java.nio.file.Paths
 
 @OptIn(PrivilegedIntent::class)
@@ -22,6 +21,7 @@ suspend fun main() {
 
         applicationCommands {
             enabled = true
+            syncPermissions = false
         }
 
         extensions {
@@ -29,15 +29,7 @@ suspend fun main() {
             add(::SupportExtension)
             add(::RoleMenuExtension)
 
-            extMappings {
-                namespaceCheck { namespace ->
-                    {
-                        failIfNot("Non-yarn commands can only be used in DM") {
-                            namespace == YarnNamespace
-                        }
-                    }
-                }
-            }
+            extMappings { }
         }
 
         intents {
