@@ -1,6 +1,6 @@
 FROM openjdk:16-jdk-slim
 
-COPY build/libs/bot-*-all.jar /usr/local/lib/bot.jar
+COPY build/libs/axolotl-*-all.jar /usr/local/lib/bot.jar
 
 RUN mkdir /bot
 WORKDIR /bot
